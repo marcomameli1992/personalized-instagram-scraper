@@ -1,5 +1,6 @@
 import time
 import requests
+from requests_html import HTMLSession
 import re
 import json
 import hashlib
@@ -37,7 +38,7 @@ class Instagram:
     instance_cache = None
 
     def __init__(self, sleep_between_requests=0):
-        self.__req = requests.session()
+        self.__req = HTMLSession()
         self.paging_time_limit_sec = Instagram.PAGING_TIME_LIMIT_SEC
         self.paging_delay_minimum_microsec = Instagram.PAGING_DELAY_MINIMUM_MICROSEC
         self.paging_delay_maximum_microsec = Instagram.PAGING_DELAY_MAXIMUM_MICROSEC
@@ -205,7 +206,7 @@ class Instagram:
     def __get_mid(self):
         """manually fetches the machine id from graphQL"""
         time.sleep(self.sleep_between_requests)
-        response = self.__req.get('https://www.instagram.com/web/__mid/', headers=self.generate_headers(self.user_session))
+        response = self.__req.get('https://www.instagram.com/web/__mid/')
 
         if response.status_code != Instagram.HTTP_OK:
             raise InstagramException.default(response.text,
@@ -555,7 +556,7 @@ class Instagram:
                     medias.append(media)
                     index += 1
                 if max_timestamp is not None and media.created_time > max_timestamp:
-                    media_ids.insert(0, media.identifier) # The lasts posts go to the top of the list
+                    media_ids.insert(0, media.identifier)  # The lasts posts go to the top of the list
                     medias.append(media)
                     index += 1
                 elif min_timestamp is None and max_timestamp is None:
@@ -1462,7 +1463,7 @@ class Instagram:
 
         if force or not self.is_logged_in(session):
             time.sleep(self.sleep_between_requests)
-            response = self.__req.get(endpoints.BASE_URL, headers=self.generate_headers(self.user_session))
+            response = self.__req.get(endpoints.BASE_URL)
             if not response.status_code == Instagram.HTTP_OK:
                 raise InstagramException.default(response.text,
                                                  response.status_code)
