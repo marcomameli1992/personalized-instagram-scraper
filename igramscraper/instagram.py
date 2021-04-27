@@ -557,7 +557,7 @@ class Instagram:
                     index += 1
                 if max_timestamp is not None and media.created_time > max_timestamp:
                     media_ids.insert(0, media.identifier)  # The lasts posts go to the top of the list
-                    medias.append(media)
+                    medias.insert(0, media)
                     index += 1
                 elif min_timestamp is None and max_timestamp is None:
                     media_ids.append(media.identifier)
