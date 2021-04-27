@@ -9,9 +9,9 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     packages=setuptools.find_packages(),
     license="MIT",
-    maintainer="realsirjoe, leungwaiban",
-    author='realsirjoe, leungwaiban',
-    url='https://github.com/realsirjoe/instagram-scraper',
+    maintainer="marcomameli",
+    author='realsirjoe, leungwaiban, marcomameli',
+    url='https://github.com/marcomameli1992/personalized-instagram-scraper',
     install_requires=[
         'requests>=2.21.0',
         'python-slugify==3.0.2'
